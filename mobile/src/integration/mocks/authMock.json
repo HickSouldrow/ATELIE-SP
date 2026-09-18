@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "latencyMs": 600,
+  "users": [
+    {
+      "userId": "1",
+      "username": "ateliesp",
+      "password": "123456",
+      "email": "contato@ateliesp.com.br",
+      "roles": ["ROLE_USER"]
+    }
+  ],
+  "errors": {
+    "userExists": "Esse usuário já existe.",
+    "invalidCredentials": "Usuário ou senha inválidos.",
+    "sessionExpired": "Sua sessão expirou. Faça login novamente.",
+    "adminOnly": "Apenas administradores podem acessar isso."
+  },
+  "messages": {
+    "user": "Bem-vindo(a) ao AteliêSP!",
+    "admin": "Painel administrativo do AteliêSP."
+  }
+}

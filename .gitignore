@@ -1,0 +1,17 @@
+# deps
+node_modules/
+
+# expo
+.expo/
+dist/
+web-build/
+
+# server build
+server/dist/
+
+# env
+.env
+*.local
+
+# os
+.DS_Store

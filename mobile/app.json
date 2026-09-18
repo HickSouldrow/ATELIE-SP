@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "AteliêSP",
+    "slug": "ateliesp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "ateliesp",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#140607"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "br.com.ateliesp.app"
+    },
+    "android": {
+      "package": "br.com.ateliesp.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#140607"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
