@@ -1,15 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 import { Colors } from '@/constants/colors';
-import { Fonts } from '@/constants/typography';
 
 export const styles = StyleSheet.create({
-    checking: {
-        flex: 1,
-        backgroundColor: Colors.background,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     screen: {
         flex: 1,
         backgroundColor: Colors.background,
@@ -26,13 +19,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 28,
-    },
-    wordmark: {
-        fontFamily: Fonts.displayItalic,
-        fontSize: 24,
-        color: Colors.brandLight,
-        marginBottom: 18,
-        textAlign: 'center',
     },
     heading: {
         fontSize: 18,

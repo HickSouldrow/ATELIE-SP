@@ -4,6 +4,7 @@ import React from 'react';
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
+    Platform,
     Pressable,
     ScrollView,
     Text,
@@ -53,7 +54,9 @@ const LoginAndroid: React.FC = () => {
                 <AuthBackground source={require('../../../assets/login-background.png')} />
 
                 <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-                    <KeyboardAvoidingView style={styles.container} behavior="height">
+                    <KeyboardAvoidingView
+                        style={styles.container}
+                        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
                         <ScrollView
                             contentContainerStyle={styles.scroll}
                             keyboardShouldPersistTaps="handled"

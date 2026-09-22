@@ -58,4 +58,22 @@ export const Colors = {
     '40': 'rgba(158,17,48,0.40)',
     '60': 'rgba(158,17,48,0.60)',
   },
+
+  // Paleta neon usada em elementos de destaque (header, menu, carrossel),
+  // inspirada nos murais/grafites de referência do projeto.
+  neon: {
+    pink: '#FF2E7A',
+    cyan: '#20E6C8',
+    yellow: '#FFD23D',
+    purple: '#B24BFF',
+  },
+
+  neonAlpha: {
+    pink15: 'rgba(255,46,122,0.15)',
+    pink30: 'rgba(255,46,122,0.30)',
+    cyan15: 'rgba(32,230,200,0.15)',
+    cyan30: 'rgba(32,230,200,0.30)',
+    yellow15: 'rgba(255,210,61,0.15)',
+    yellow30: 'rgba(255,210,61,0.30)',
+  },
 } as const;

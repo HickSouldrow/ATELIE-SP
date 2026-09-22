@@ -23,7 +23,11 @@ const InputAndroid: React.FC<InputProps> = ({ icon, isPassword, ...rest }) => {
             />
 
             {isPassword && (
-                <Pressable onPress={() => setIsVisible((prev) => !prev)} hitSlop={8}>
+                <Pressable
+                    onPress={() => setIsVisible((prev) => !prev)}
+                    hitSlop={8}
+                    accessibilityRole="button"
+                    accessibilityLabel={isVisible ? 'Ocultar senha' : 'Mostrar senha'}>
                     <Ionicons
                         name={isVisible ? 'eye-off-outline' : 'eye-outline'}
                         size={20}

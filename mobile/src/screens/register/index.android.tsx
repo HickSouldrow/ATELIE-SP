@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AuthBackground } from '@/components/auth-background';
@@ -37,7 +37,9 @@ const RegisterAndroid: React.FC = () => {
                 <AuthBackground source={require('../../../assets/register-background.png')} />
 
                 <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-                    <KeyboardAvoidingView style={styles.container} behavior="height">
+                    <KeyboardAvoidingView
+                        style={styles.container}
+                        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
                         <ScrollView
                             contentContainerStyle={styles.scroll}
                             keyboardShouldPersistTaps="handled"
@@ -53,6 +55,7 @@ const RegisterAndroid: React.FC = () => {
                                         value={username}
                                         autoCapitalize="none"
                                         autoCorrect={false}
+                                        returnKeyType="next"
                                     />
 
                                     <Input
@@ -63,6 +66,7 @@ const RegisterAndroid: React.FC = () => {
                                         keyboardType="email-address"
                                         autoCapitalize="none"
                                         autoCorrect={false}
+                                        returnKeyType="next"
                                     />
 
                                     <Input
@@ -72,6 +76,7 @@ const RegisterAndroid: React.FC = () => {
                                         onChangeText={setPassword}
                                         value={password}
                                         autoCorrect={false}
+                                        returnKeyType="next"
                                     />
 
                                     <Input
@@ -81,6 +86,8 @@ const RegisterAndroid: React.FC = () => {
                                         onChangeText={setConfirmPassword}
                                         value={confirmPassword}
                                         autoCorrect={false}
+                                        returnKeyType="go"
+                                        onSubmitEditing={handleCreateAccount}
                                     />
                                 </View>
 
