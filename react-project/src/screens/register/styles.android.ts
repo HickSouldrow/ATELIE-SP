@@ -9,6 +9,8 @@ export const styles = StyleSheet.create({
     },
     safeArea: {
         flex: 1,
+        zIndex: 1,
+        elevation: 1,
     },
     container: {
         flex: 1,

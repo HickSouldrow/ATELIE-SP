@@ -1,32 +1,39 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
+import {
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    Pressable,
+    ScrollView,
+    Text,
+    View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AuthBackground } from '@/components/auth-background';
+import { AuthBackground } from '@/components/auth-background/index.android';
 import { BoxLogin } from '@/components/box-login';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
+import { Colors } from '@/constants/colors';
 
 import { styles } from './styles.android';
-import { useRegister } from './useRegister';
+import { useLogin } from './useLogin';
 
-const RegisterAndroid: React.FC = () => {
+const LoginAndroid: React.FC = () => {
     const {
         username,
         setUsername,
-        email,
-        setEmail,
         password,
         setPassword,
-        confirmPassword,
-        setConfirmPassword,
         error,
         isLoading,
-        handleCreateAccount,
-        goToLogin,
-    } = useRegister();
+        isCheckingSession,
+        handleLogin,
+        goToRegister,
+    } = useLogin();
+
+    const canSubmit = username.trim().length > 0 && password.length > 0;
 
     return (
         <>
@@ -34,18 +41,17 @@ const RegisterAndroid: React.FC = () => {
             <StatusBar style="light" />
 
             <View style={styles.screen}>
-                <AuthBackground source={require('../../../assets/register-background.png')} />
+                <AuthBackground source={require('../../../assets/login-background.png')} />
 
                 <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-                    <KeyboardAvoidingView
-                        style={styles.container}
-                        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+                    {/* No Android com edge-to-edge (SDK 57) o "padding" é o que funciona */}
+                    <KeyboardAvoidingView style={styles.container} behavior="padding">
                         <ScrollView
                             contentContainerStyle={styles.scroll}
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}>
                             <BoxLogin>
-                                <Text style={styles.heading}>Criar conta</Text>
+                                <Text style={styles.heading}>Entrar</Text>
 
                                 <View style={styles.fieldsGroup}>
                                     <Input
@@ -59,56 +65,44 @@ const RegisterAndroid: React.FC = () => {
                                     />
 
                                     <Input
-                                        placeholder="E-mail"
-                                        icon="mail-outline"
-                                        onChangeText={setEmail}
-                                        value={email}
-                                        keyboardType="email-address"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        returnKeyType="next"
-                                    />
-
-                                    <Input
                                         placeholder="Senha"
                                         icon="lock-closed-outline"
                                         isPassword
                                         onChangeText={setPassword}
                                         value={password}
-                                        autoCorrect={false}
-                                        returnKeyType="next"
-                                    />
-
-                                    <Input
-                                        placeholder="Confirmar senha"
-                                        icon="lock-closed-outline"
-                                        isPassword
-                                        onChangeText={setConfirmPassword}
-                                        value={confirmPassword}
+                                        autoCapitalize="none"
                                         autoCorrect={false}
                                         returnKeyType="go"
-                                        onSubmitEditing={handleCreateAccount}
+                                        onSubmitEditing={canSubmit ? handleLogin : undefined}
                                     />
                                 </View>
 
                                 {!!error && <Text style={styles.error}>{error}</Text>}
 
                                 <Button
-                                    title="Criar conta"
+                                    title="Entrar"
                                     loading={isLoading}
-                                    onPress={handleCreateAccount}
+                                    disabled={!canSubmit}
+                                    onPress={handleLogin}
                                 />
 
-                                <Pressable hitSlop={8} onPress={goToLogin} style={styles.linkRow}>
-                                    <Text style={styles.link}>Já tenho conta</Text>
+                                <Pressable hitSlop={8} onPress={goToRegister} style={styles.linkRow}>
+                                    <Text style={styles.link}>Não possuo uma conta</Text>
                                 </Pressable>
                             </BoxLogin>
                         </ScrollView>
                     </KeyboardAvoidingView>
+
+                    {/* Verificação de sessão vira overlay: o formulário não é desmontado */}
+                    {isCheckingSession && (
+                        <View style={styles.checking} pointerEvents="auto">
+                            <ActivityIndicator color={Colors.white} />
+                        </View>
+                    )}
                 </SafeAreaView>
             </View>
         </>
     );
 };
 
-export default RegisterAndroid;
+export default LoginAndroid;

@@ -1,49 +1,32 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {
-    ActivityIndicator,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    ScrollView,
-    Text,
-    View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AuthBackground } from '@/components/auth-background';
+import { AuthBackground } from '@/components/auth-background/index.android';
 import { BoxLogin } from '@/components/box-login';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
-import { Colors } from '@/constants/colors';
 
 import { styles } from './styles.android';
-import { useLogin } from './useLogin';
+import { useRegister } from './useRegister';
 
-const LoginAndroid: React.FC = () => {
+const RegisterAndroid: React.FC = () => {
     const {
         username,
         setUsername,
+        email,
+        setEmail,
         password,
         setPassword,
+        confirmPassword,
+        setConfirmPassword,
         error,
         isLoading,
-        isCheckingSession,
-        handleLogin,
-        goToRegister,
-    } = useLogin();
-
-    if (isCheckingSession) {
-        return (
-            <>
-                <Stack.Screen options={{ headerShown: false }} />
-                <View style={styles.checking}>
-                    <ActivityIndicator color={Colors.white} />
-                </View>
-            </>
-        );
-    }
+        handleCreateAccount,
+        goToLogin,
+    } = useRegister();
 
     return (
         <>
@@ -51,7 +34,7 @@ const LoginAndroid: React.FC = () => {
             <StatusBar style="light" />
 
             <View style={styles.screen}>
-                <AuthBackground source={require('../../../assets/login-background.png')} />
+                <AuthBackground source={require('../../../assets/register-background.png')} />
 
                 <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
                     <KeyboardAvoidingView
@@ -61,10 +44,8 @@ const LoginAndroid: React.FC = () => {
                             contentContainerStyle={styles.scroll}
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}>
-                            <Text style={styles.wordmark}>AteliêSP</Text>
-
                             <BoxLogin>
-                                <Text style={styles.heading}>Entrar</Text>
+                                <Text style={styles.heading}>Criar conta</Text>
 
                                 <View style={styles.fieldsGroup}>
                                     <Input
@@ -78,23 +59,48 @@ const LoginAndroid: React.FC = () => {
                                     />
 
                                     <Input
+                                        placeholder="E-mail"
+                                        icon="mail-outline"
+                                        onChangeText={setEmail}
+                                        value={email}
+                                        keyboardType="email-address"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        returnKeyType="next"
+                                    />
+
+                                    <Input
                                         placeholder="Senha"
                                         icon="lock-closed-outline"
                                         isPassword
                                         onChangeText={setPassword}
                                         value={password}
                                         autoCorrect={false}
+                                        returnKeyType="next"
+                                    />
+
+                                    <Input
+                                        placeholder="Confirmar senha"
+                                        icon="lock-closed-outline"
+                                        isPassword
+                                        onChangeText={setConfirmPassword}
+                                        value={confirmPassword}
+                                        autoCorrect={false}
                                         returnKeyType="go"
-                                        onSubmitEditing={handleLogin}
+                                        onSubmitEditing={handleCreateAccount}
                                     />
                                 </View>
 
                                 {!!error && <Text style={styles.error}>{error}</Text>}
 
-                                <Button title="Entrar" loading={isLoading} onPress={handleLogin} />
+                                <Button
+                                    title="Criar conta"
+                                    loading={isLoading}
+                                    onPress={handleCreateAccount}
+                                />
 
-                                <Pressable hitSlop={8} onPress={goToRegister} style={styles.linkRow}>
-                                    <Text style={styles.link}>Não possuo uma conta</Text>
+                                <Pressable hitSlop={8} onPress={goToLogin} style={styles.linkRow}>
+                                    <Text style={styles.link}>Já tenho conta</Text>
                                 </Pressable>
                             </BoxLogin>
                         </ScrollView>
@@ -105,4 +111,4 @@ const LoginAndroid: React.FC = () => {
     );
 };
 
-export default LoginAndroid;
+export default RegisterAndroid;
