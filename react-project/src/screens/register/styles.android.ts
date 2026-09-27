@@ -33,6 +33,14 @@ export const styles = StyleSheet.create({
         gap: 12,
         marginBottom: 24,
     },
+    field: {
+        width: '100%',
+        gap: 4,
+    },
+    fieldError: {
+        fontSize: 12,
+        color: Colors.semantic.error.text,
+    },
     error: {
         width: '100%',
         fontSize: 13,

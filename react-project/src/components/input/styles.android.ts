@@ -21,4 +21,7 @@ export const styles = StyleSheet.create({
         color: Colors.white,
         paddingVertical: 0,
     },
+    wrapperError: {
+        borderColor: Colors.semantic.error.border,
+    },
 });

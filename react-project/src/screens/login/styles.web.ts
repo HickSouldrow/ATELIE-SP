@@ -52,6 +52,12 @@ export const styles = StyleSheet.create({
         color: Colors.semantic.error.text,
         marginBottom: 12,
     },
+    success: {
+        width: '100%',
+        fontSize: 13,
+        color: Colors.semantic.success.text,
+        marginBottom: 12,
+    },
     linkRow: {
         marginTop: 14,
     },

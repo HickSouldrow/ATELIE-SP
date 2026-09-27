@@ -40,6 +40,13 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 12,
     },
+    success: {
+        width: '100%',
+        fontSize: 13,
+        color: Colors.semantic.success.text,
+        textAlign: 'center',
+        marginBottom: 12,
+    },
     linkRow: {
         marginTop: 16,
         paddingVertical: 4,

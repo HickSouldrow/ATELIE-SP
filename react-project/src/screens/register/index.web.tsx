@@ -6,6 +6,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { AuthBackground } from '@/components/auth-background';
 import { BoxLogin } from '@/components/box-login';
 import { Button } from '@/components/button';
+import { FeedbackAlert } from '@/components/feedback-alert';
 import { Input } from '@/components/input';
 
 import { styles } from './styles.web';
@@ -21,9 +22,12 @@ const RegisterWeb: React.FC = () => {
         setPassword,
         confirmPassword,
         setConfirmPassword,
+        fieldErrors,
         error,
         isLoading,
+        showSuccessAlert,
         handleCreateAccount,
+        handleSuccessConfirm,
         goToLogin,
     } = useRegister();
 
@@ -45,42 +49,66 @@ const RegisterWeb: React.FC = () => {
                             <Text style={styles.heading}>Criar conta</Text>
 
                             <View style={styles.fieldsGroup}>
-                                <Input
-                                    placeholder="Usuário"
-                                    icon="person-outline"
-                                    onChangeText={setUsername}
-                                    value={username}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
+                                <View style={styles.field}>
+                                    <Input
+                                        placeholder="Usuário"
+                                        icon="person-outline"
+                                        onChangeText={setUsername}
+                                        value={username}
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        hasError={!!fieldErrors.username}
+                                    />
+                                    {!!fieldErrors.username && (
+                                        <Text style={styles.fieldError}>{fieldErrors.username}</Text>
+                                    )}
+                                </View>
 
-                                <Input
-                                    placeholder="E-mail"
-                                    icon="mail-outline"
-                                    onChangeText={setEmail}
-                                    value={email}
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
+                                <View style={styles.field}>
+                                    <Input
+                                        placeholder="E-mail"
+                                        icon="mail-outline"
+                                        onChangeText={setEmail}
+                                        value={email}
+                                        keyboardType="email-address"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        hasError={!!fieldErrors.email}
+                                    />
+                                    {!!fieldErrors.email && (
+                                        <Text style={styles.fieldError}>{fieldErrors.email}</Text>
+                                    )}
+                                </View>
 
-                                <Input
-                                    placeholder="Senha"
-                                    icon="lock-closed-outline"
-                                    isPassword
-                                    onChangeText={setPassword}
-                                    value={password}
-                                    autoCorrect={false}
-                                />
+                                <View style={styles.field}>
+                                    <Input
+                                        placeholder="Senha"
+                                        icon="lock-closed-outline"
+                                        isPassword
+                                        onChangeText={setPassword}
+                                        value={password}
+                                        autoCorrect={false}
+                                        hasError={!!fieldErrors.password}
+                                    />
+                                    {!!fieldErrors.password && (
+                                        <Text style={styles.fieldError}>{fieldErrors.password}</Text>
+                                    )}
+                                </View>
 
-                                <Input
-                                    placeholder="Confirmar senha"
-                                    icon="lock-closed-outline"
-                                    isPassword
-                                    onChangeText={setConfirmPassword}
-                                    value={confirmPassword}
-                                    autoCorrect={false}
-                                />
+                                <View style={styles.field}>
+                                    <Input
+                                        placeholder="Confirmar senha"
+                                        icon="lock-closed-outline"
+                                        isPassword
+                                        onChangeText={setConfirmPassword}
+                                        value={confirmPassword}
+                                        autoCorrect={false}
+                                        hasError={!!fieldErrors.confirmPassword}
+                                    />
+                                    {!!fieldErrors.confirmPassword && (
+                                        <Text style={styles.fieldError}>{fieldErrors.confirmPassword}</Text>
+                                    )}
+                                </View>
                             </View>
 
                             {!!error && <Text style={styles.error}>{error}</Text>}
@@ -98,6 +126,15 @@ const RegisterWeb: React.FC = () => {
                     </View>
                 </ScrollView>
             </View>
+
+            <FeedbackAlert
+                visible={showSuccessAlert}
+                type="success"
+                title="Conta criada!"
+                message="Sua conta foi criada com sucesso. Faça login para continuar."
+                confirmText="Ir para o login"
+                onConfirm={handleSuccessConfirm}
+            />
         </>
     );
 };

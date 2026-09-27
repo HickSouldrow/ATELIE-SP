@@ -7,11 +7,11 @@ import { Colors } from '@/constants/colors';
 import { styles } from './styles.web';
 import { InputProps } from './types';
 
-const InputWeb: React.FC<InputProps> = ({ icon, isPassword, ...rest }) => {
+const InputWeb: React.FC<InputProps> = ({ icon, isPassword, hasError, ...rest }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     return (
-        <View style={styles.wrapper}>
+        <View style={[styles.wrapper, hasError && styles.wrapperError]}>
             <Ionicons name={icon} size={18} color={Colors.whiteAlpha['65']} />
 
             <TextInput

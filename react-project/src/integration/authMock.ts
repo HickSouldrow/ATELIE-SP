@@ -44,7 +44,6 @@ export async function createUser(payload: User): Promise<Auth> {
     };
 
     users.push(user);
-    session = toAuth(user);
 
     return toAuth(user);
 }

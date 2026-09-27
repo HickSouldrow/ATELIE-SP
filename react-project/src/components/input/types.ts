@@ -5,4 +5,5 @@ export type InputProps = TextInputProps & {
     placeholder: string;
     icon: keyof typeof Ionicons.glyphMap;
     isPassword?: boolean;
+    hasError?: boolean;
 };

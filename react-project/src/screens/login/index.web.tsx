@@ -26,6 +26,7 @@ const LoginWeb: React.FC = () => {
         password,
         setPassword,
         error,
+        successMessage,
         isLoading,
         isCheckingSession,
         handleLogin,
@@ -83,6 +84,9 @@ const LoginWeb: React.FC = () => {
                                 />
                             </View>
 
+                            {!error && !!successMessage && (
+                                <Text style={styles.success}>{successMessage}</Text>
+                            )}
                             {!!error && <Text style={styles.error}>{error}</Text>}
 
                             <Button title="Entrar" loading={isLoading} onPress={handleLogin} />

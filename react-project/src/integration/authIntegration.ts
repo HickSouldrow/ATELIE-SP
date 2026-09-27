@@ -14,6 +14,14 @@ export { registerSessionExpiredHandler } from './sessionExpired';
 
 const USE_MOCK = authMock.MOCK_ENABLED || !API_URL;
 
+async function safeFetch(input: string, init?: RequestInit): Promise<Response> {
+    try {
+        return await fetch(input, init);
+    } catch {
+        throw new Error('Falha de conexão. Verifique sua internet e tente novamente.');
+    }
+}
+
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
         const message = await response.text().catch(() => '');
@@ -35,7 +43,7 @@ export async function createUser(payload: User): Promise<Auth> {
         return authMock.createUser(payload);
     }
 
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await safeFetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -50,7 +58,7 @@ export async function login(payload: Login): Promise<Auth> {
         return authMock.login(payload);
     }
 
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await safeFetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -65,7 +73,7 @@ export async function logout(): Promise<void> {
         return authMock.logout();
     }
 
-    const response = await fetch(`${API_URL}/auth/logout`, {
+    const response = await safeFetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
     });
@@ -80,7 +88,7 @@ export async function getMessage(): Promise<Message> {
         return authMock.getMessage();
     }
 
-    const response = await fetch(`${API_URL}/auth/me`, {
+    const response = await safeFetch(`${API_URL}/auth/me`, {
         method: 'GET',
         credentials: 'include',
     });

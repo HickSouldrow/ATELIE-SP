@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { BoxLogin } from "@/components/box-login";
 import { Button } from "@/components/button";
+import { FeedbackAlert } from "@/components/feedback-alert";
 import { Input } from "@/components/input";
 
 import { styles } from "./styles.android";
@@ -28,9 +29,12 @@ const RegisterAndroid: React.FC = () => {
     setPassword,
     confirmPassword,
     setConfirmPassword,
+    fieldErrors,
     error,
     isLoading,
+    showSuccessAlert,
     handleCreateAccount,
+    handleSuccessConfirm,
     goToLogin,
   } = useRegister();
 
@@ -56,47 +60,71 @@ const RegisterAndroid: React.FC = () => {
                   <Text style={styles.heading}>Criar conta</Text>
 
                   <View style={styles.fieldsGroup}>
-                    <Input
-                      placeholder="Usuário"
-                      icon="person-outline"
-                      onChangeText={setUsername}
-                      value={username}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      returnKeyType="next"
-                    />
+                    <View style={styles.field}>
+                      <Input
+                        placeholder="Usuário"
+                        icon="person-outline"
+                        onChangeText={setUsername}
+                        value={username}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        returnKeyType="next"
+                        hasError={!!fieldErrors.username}
+                      />
+                      {!!fieldErrors.username && (
+                        <Text style={styles.fieldError}>{fieldErrors.username}</Text>
+                      )}
+                    </View>
 
-                    <Input
-                      placeholder="E-mail"
-                      icon="mail-outline"
-                      onChangeText={setEmail}
-                      value={email}
-                      keyboardType="email-address"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      returnKeyType="next"
-                    />
+                    <View style={styles.field}>
+                      <Input
+                        placeholder="E-mail"
+                        icon="mail-outline"
+                        onChangeText={setEmail}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        returnKeyType="next"
+                        hasError={!!fieldErrors.email}
+                      />
+                      {!!fieldErrors.email && (
+                        <Text style={styles.fieldError}>{fieldErrors.email}</Text>
+                      )}
+                    </View>
 
-                    <Input
-                      placeholder="Senha"
-                      icon="lock-closed-outline"
-                      isPassword
-                      onChangeText={setPassword}
-                      value={password}
-                      autoCorrect={false}
-                      returnKeyType="next"
-                    />
+                    <View style={styles.field}>
+                      <Input
+                        placeholder="Senha"
+                        icon="lock-closed-outline"
+                        isPassword
+                        onChangeText={setPassword}
+                        value={password}
+                        autoCorrect={false}
+                        returnKeyType="next"
+                        hasError={!!fieldErrors.password}
+                      />
+                      {!!fieldErrors.password && (
+                        <Text style={styles.fieldError}>{fieldErrors.password}</Text>
+                      )}
+                    </View>
 
-                    <Input
-                      placeholder="Confirmar senha"
-                      icon="lock-closed-outline"
-                      isPassword
-                      onChangeText={setConfirmPassword}
-                      value={confirmPassword}
-                      autoCorrect={false}
-                      returnKeyType="go"
-                      onSubmitEditing={handleCreateAccount}
-                    />
+                    <View style={styles.field}>
+                      <Input
+                        placeholder="Confirmar senha"
+                        icon="lock-closed-outline"
+                        isPassword
+                        onChangeText={setConfirmPassword}
+                        value={confirmPassword}
+                        autoCorrect={false}
+                        returnKeyType="go"
+                        onSubmitEditing={handleCreateAccount}
+                        hasError={!!fieldErrors.confirmPassword}
+                      />
+                      {!!fieldErrors.confirmPassword && (
+                        <Text style={styles.fieldError}>{fieldErrors.confirmPassword}</Text>
+                      )}
+                    </View>
                   </View>
 
                   {!!error && <Text style={styles.error}>{error}</Text>}
@@ -120,6 +148,15 @@ const RegisterAndroid: React.FC = () => {
           </SafeAreaView>
         </View>
       </ImageBackground>
+
+      <FeedbackAlert
+        visible={showSuccessAlert}
+        type="success"
+        title="Conta criada!"
+        message="Sua conta foi criada com sucesso. Faça login para continuar."
+        confirmText="Ir para o login"
+        onConfirm={handleSuccessConfirm}
+      />
     </>
   );
 };
