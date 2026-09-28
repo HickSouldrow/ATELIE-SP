@@ -1,11 +1,12 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useRef } from 'react';
 import {
     ActivityIndicator,
     Pressable,
     ScrollView,
     Text,
+    TextInput,
     useWindowDimensions,
     View,
 } from 'react-native';
@@ -29,16 +30,19 @@ const LoginWeb: React.FC = () => {
         successMessage,
         isLoading,
         isCheckingSession,
+        canSubmit,
         handleLogin,
         goToRegister,
     } = useLogin();
+
+    const passwordRef = useRef<TextInput>(null);
 
     if (isCheckingSession) {
         return (
             <>
                 <Stack.Screen options={{ headerShown: false }} />
                 <View style={styles.checking}>
-                    <ActivityIndicator color={Colors.white} />
+                    <ActivityIndicator color={Colors.primaryLight} />
                 </View>
             </>
         );
@@ -72,26 +76,47 @@ const LoginWeb: React.FC = () => {
                                     value={username}
                                     autoCapitalize="none"
                                     autoCorrect={false}
+                                    autoComplete="username"
+                                    onSubmitEditing={() => passwordRef.current?.focus()}
                                 />
 
                                 <Input
+                                    ref={passwordRef}
                                     placeholder="Senha"
                                     icon="lock-closed-outline"
                                     isPassword
                                     onChangeText={setPassword}
                                     value={password}
+                                    autoCapitalize="none"
                                     autoCorrect={false}
+                                    autoComplete="current-password"
+                                    onSubmitEditing={handleLogin}
                                 />
                             </View>
 
                             {!error && !!successMessage && (
-                                <Text style={styles.success}>{successMessage}</Text>
+                                <Text style={styles.success} aria-live="polite">
+                                    {successMessage}
+                                </Text>
                             )}
-                            {!!error && <Text style={styles.error}>{error}</Text>}
+                            {!!error && (
+                                <Text style={styles.error} aria-live="polite">
+                                    {error}
+                                </Text>
+                            )}
 
-                            <Button title="Entrar" loading={isLoading} onPress={handleLogin} />
+                            <Button
+                                title="Entrar"
+                                loading={isLoading}
+                                disabled={!canSubmit}
+                                onPress={handleLogin}
+                            />
 
-                            <Pressable hitSlop={8} onPress={goToRegister} style={styles.linkRow}>
+                            <Pressable
+                                hitSlop={8}
+                                onPress={goToRegister}
+                                style={styles.linkRow}
+                                accessibilityRole="link">
                                 <Text style={styles.link}>Não possuo uma conta</Text>
                             </Pressable>
                         </View>

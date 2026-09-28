@@ -35,7 +35,9 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
                 <Pressable
                     onPress={() => setMenuOpen(true)}
                     hitSlop={8}
-                    style={({ hovered }) => [styles.iconButton, hovered && styles.iconButtonHovered]}>
+                    accessibilityRole="button"
+                    accessibilityLabel="Abrir menu"
+                    style={({ hovered }: any) => [styles.iconButton, hovered && styles.iconButtonHovered]}>
                     <Ionicons name="menu" size={22} color={Colors.white} />
                 </Pressable>
 
@@ -53,7 +55,7 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
                     <Pressable
                         onPress={() => setProfileOpen((prev) => !prev)}
                         hitSlop={8}
-                        style={({ hovered }) => [styles.avatar, hovered && styles.avatarHovered]}>
+                        style={({ hovered }: any) => [styles.avatar, hovered && styles.avatarHovered]}>
                         {initial ? (
                             <Text style={styles.avatarInitial}>{initial}</Text>
                         ) : (
@@ -68,7 +70,7 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
                                 {!!username && <Text style={styles.dropdownUsername}>{username}</Text>}
                                 <Pressable
                                     onPress={handleEditProfile}
-                                    style={({ hovered }) => [
+                                    style={({ hovered }: any) => [
                                         styles.dropdownItem,
                                         hovered && styles.dropdownItemHovered,
                                     ]}>

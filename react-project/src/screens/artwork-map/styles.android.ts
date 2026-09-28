@@ -1,0 +1,203 @@
+import { StyleSheet } from 'react-native';
+import { MapStyleElement } from 'react-native-maps';
+
+import { Colors } from '@/constants/colors';
+
+// Estilo escuro do Google Maps no mesmo tom da paleta do app.
+export const darkMapStyle: MapStyleElement[] = [
+    { elementType: 'geometry', stylers: [{ color: Colors.map.land }] },
+    { elementType: 'labels.text.fill', stylers: [{ color: Colors.map.label }] },
+    { elementType: 'labels.text.stroke', stylers: [{ color: Colors.map.labelStroke }] },
+    { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: Colors.map.border }] },
+    { featureType: 'poi', elementType: 'geometry', stylers: [{ color: Colors.map.poi }] },
+    { featureType: 'poi', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: Colors.map.park }] },
+    { featureType: 'road', elementType: 'geometry', stylers: [{ color: Colors.map.road }] },
+    { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: Colors.map.roadStroke }] },
+    { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: Colors.map.highway }] },
+    { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: Colors.map.highwayLabel }] },
+    { featureType: 'transit', elementType: 'geometry', stylers: [{ color: Colors.map.transit }] },
+    { featureType: 'transit.station', elementType: 'labels.text.fill', stylers: [{ color: Colors.map.transitLabel }] },
+    { featureType: 'water', elementType: 'geometry', stylers: [{ color: Colors.map.water }] },
+    { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: Colors.map.waterLabel }] },
+];
+
+export const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: Colors.background,
+    },
+
+    topOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        paddingHorizontal: 12,
+        gap: 10,
+        pointerEvents: 'box-none',
+    },
+    topBarCard: {
+        marginTop: 8,
+        borderRadius: 14,
+        backgroundColor: Colors.overlay['88'],
+        borderWidth: 1,
+        borderColor: Colors.border,
+    },
+    filters: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        pointerEvents: 'box-none',
+    },
+    chip: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        height: 36,
+        paddingHorizontal: 14,
+        borderRadius: 999,
+        backgroundColor: Colors.surface,
+        borderWidth: 1,
+        borderColor: Colors.borderStrong,
+        elevation: 3,
+    },
+    chipActive: {
+        backgroundColor: Colors.primary,
+        borderColor: Colors.primary,
+    },
+    chipLabel: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: Colors.textMuted,
+    },
+    chipLabelActive: {
+        color: Colors.onPrimary,
+    },
+
+    emptyWrap: {
+        ...StyleSheet.absoluteFill,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 28,
+        pointerEvents: 'box-none',
+    },
+    emptyCard: {
+        width: '100%',
+        maxWidth: 360,
+        alignItems: 'center',
+        gap: 10,
+        padding: 22,
+        borderRadius: 16,
+        backgroundColor: Colors.surface,
+        borderWidth: 1,
+        borderColor: Colors.border,
+        elevation: 6,
+    },
+    emptyTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.text,
+        textAlign: 'center',
+    },
+    emptyText: {
+        fontSize: 13,
+        lineHeight: 19,
+        color: Colors.textMuted,
+        textAlign: 'center',
+        marginBottom: 6,
+    },
+
+    fabColumn: {
+        position: 'absolute',
+        right: 16,
+        alignItems: 'center',
+        gap: 12,
+    },
+    fabSecondary: {
+        width: 46,
+        height: 46,
+        borderRadius: 23,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.surface,
+        borderWidth: 1,
+        borderColor: Colors.borderStrong,
+        elevation: 4,
+    },
+    fab: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.primary,
+        borderWidth: 2,
+        borderColor: Colors.accent,
+        elevation: 6,
+    },
+
+    card: {
+        position: 'absolute',
+        left: 12,
+        right: 12,
+        height: 112,
+        flexDirection: 'row',
+        gap: 12,
+        padding: 12,
+        borderRadius: 16,
+        backgroundColor: Colors.surface,
+        borderWidth: 1,
+        borderColor: Colors.border,
+        borderLeftWidth: 3,
+        borderLeftColor: Colors.accent,
+        elevation: 8,
+    },
+    cardPhoto: {
+        width: 88,
+        height: 88,
+        borderRadius: 10,
+        backgroundColor: Colors.surfaceRaised,
+    },
+    cardBody: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingRight: 24,
+    },
+    cardTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.text,
+    },
+    cardMeta: {
+        fontSize: 12,
+        color: Colors.textSubtle,
+        marginTop: 2,
+    },
+    cardAddress: {
+        fontSize: 12,
+        color: Colors.textMuted,
+        marginTop: 2,
+    },
+    cardLink: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+        marginTop: 8,
+    },
+    cardLinkText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: Colors.primaryLight,
+    },
+    cardClose: {
+        position: 'absolute',
+        top: 8,
+        right: 8,
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});

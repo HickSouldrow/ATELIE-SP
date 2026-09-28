@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         transform: [{ scale: 1.08 }],
     },
     overlay: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
     },
 });
 

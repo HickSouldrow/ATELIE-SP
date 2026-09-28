@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.background,
     },
+    overlay: {
+        flex: 1,
+        backgroundColor: Colors.scrim,
+    },
     safeArea: {
         flex: 1,
         zIndex: 1,
@@ -25,7 +29,7 @@ export const styles = StyleSheet.create({
     heading: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.white,
+        color: Colors.text,
         marginBottom: 12,
     },
     fieldsGroup: {
@@ -39,12 +43,16 @@ export const styles = StyleSheet.create({
     },
     fieldError: {
         fontSize: 12,
-        color: Colors.semantic.error.text,
+        color: Colors.error,
+    },
+    fieldHint: {
+        fontSize: 12,
+        color: Colors.textSubtle,
     },
     error: {
         width: '100%',
         fontSize: 13,
-        color: Colors.semantic.error.text,
+        color: Colors.error,
         textAlign: 'center',
         marginBottom: 12,
     },
@@ -54,7 +62,7 @@ export const styles = StyleSheet.create({
     },
     link: {
         fontSize: 14,
-        color: Colors.whiteAlpha['55'],
+        color: Colors.textMuted,
         textDecorationLine: 'underline',
     },
 });

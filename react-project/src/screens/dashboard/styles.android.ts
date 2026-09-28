@@ -96,16 +96,9 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 12,
     },
-    gpsBadge: {
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 999,
-        backgroundColor: Colors.neonAlpha.pink15,
-    },
-    gpsBadgeText: {
-        fontSize: 11,
-        fontWeight: '700',
-        color: Colors.neon.pink,
+    gpsActions: {
+        alignSelf: 'stretch',
+        gap: 10,
     },
 
     mission: {

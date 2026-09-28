@@ -40,7 +40,7 @@ const AuthBackgroundAndroid: React.FC<AuthBackgroundProps> = ({
 
 const styles = StyleSheet.create({
     layer: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         backgroundColor: Colors.background,
         zIndex: 0,
         elevation: 0,

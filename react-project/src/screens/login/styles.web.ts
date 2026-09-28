@@ -32,13 +32,13 @@ export const styles = StyleSheet.create({
     wordmark: {
         fontFamily: Fonts.displayItalic,
         fontSize: 20,
-        color: Colors.brandLight,
+        color: Colors.primaryLight,
         marginBottom: 20,
     },
     heading: {
         fontSize: 20,
         fontWeight: '600',
-        color: Colors.white,
+        color: Colors.text,
         marginBottom: 16,
     },
     fieldsGroup: {
@@ -49,13 +49,13 @@ export const styles = StyleSheet.create({
     error: {
         width: '100%',
         fontSize: 13,
-        color: Colors.semantic.error.text,
+        color: Colors.error,
         marginBottom: 12,
     },
     success: {
         width: '100%',
         fontSize: 13,
-        color: Colors.semantic.success.text,
+        color: Colors.success,
         marginBottom: 12,
     },
     linkRow: {
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     },
     link: {
         fontSize: 13,
-        color: Colors.whiteAlpha['55'],
+        color: Colors.textMuted,
         textDecorationLine: 'underline',
     },
 });
