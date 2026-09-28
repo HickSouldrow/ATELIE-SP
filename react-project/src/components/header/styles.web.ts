@@ -26,6 +26,9 @@ export const styles = StyleSheet.create({
     iconButtonHovered: {
         backgroundColor: Colors.whiteAlpha['08'],
     },
+    wordmarkButton: {
+        cursor: 'pointer',
+    },
     wordmark: {
         fontFamily: Fonts.displayItalic,
         fontSize: 19,

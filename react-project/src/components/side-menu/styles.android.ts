@@ -4,8 +4,12 @@ import { Colors } from '@/constants/colors';
 import { Fonts } from '@/constants/typography';
 
 export const styles = StyleSheet.create({
+    // Sem Modal: o menu é um overlay absoluto dentro da própria tela,
+    // acima de tudo (zIndex/elevation).
     overlay: {
         ...StyleSheet.absoluteFillObject,
+        zIndex: 1000,
+        elevation: 24,
     },
     backdrop: {
         ...StyleSheet.absoluteFillObject,
@@ -27,8 +31,6 @@ export const styles = StyleSheet.create({
     },
     safeArea: {
         flex: 1,
-        paddingTop: 16,
-        paddingBottom: 16,
         paddingHorizontal: 18,
     },
     edgeGlow: {

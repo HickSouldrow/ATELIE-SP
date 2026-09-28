@@ -4,9 +4,15 @@ import { Colors } from '@/constants/colors';
 import { Fonts } from '@/constants/typography';
 
 export const styles = StyleSheet.create({
+    // 'fixed' cobre a janela inteira. Com absoluteFill o overlay ficava
+    // limitado à altura do Header (60px) e o drawer não aparecia.
     overlay: {
-        ...StyleSheet.absoluteFillObject,
-        zIndex: 100,
+        position: 'fixed' as any,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1000,
     },
     backdrop: {
         ...StyleSheet.absoluteFillObject,

@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { usePathname, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Pressable, ScrollView, Text, View } from 'react-native';
 
@@ -9,11 +10,11 @@ import { styles } from './styles.web';
 import { SideMenuItem, SideMenuProps } from './types';
 
 const DEFAULT_ITEMS: SideMenuItem[] = [
-    { key: 'inicio', label: 'Início', icon: 'home-outline' },
+    { key: 'inicio', label: 'Início', icon: 'home-outline', route: '/dashboard' },
     { key: 'mapa', label: 'Mapa de murais', icon: 'map-outline' },
     { key: 'comunidade', label: 'Comunidade', icon: 'people-outline' },
     { key: 'favoritos', label: 'Favoritos', icon: 'heart-outline' },
-    { key: 'sobre', label: 'Sobre o projeto', icon: 'information-circle-outline' },
+    { key: 'sobre', label: 'Sobre nós', icon: 'information-circle-outline', route: '/about' },
     { key: 'config', label: 'Configurações', icon: 'settings-outline' },
 ];
 
@@ -51,44 +52,62 @@ const MenuRow: React.FC<{ item: SideMenuItem; active: boolean; onPress: () => vo
 
 const SideMenuWeb: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAULT_ITEMS }) => {
     const [mounted, setMounted] = useState(visible);
-    const [activeKey, setActiveKey] = useState(items[0]?.key);
+    const router = useRouter();
+    const pathname = usePathname();
     const translateX = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
     const backdropOpacity = useRef(new Animated.Value(0)).current;
 
-    function handleSelect(key: string) {
-        setActiveKey(key);
+    function handleSelect(item: SideMenuItem) {
         onClose();
+        if (item.route && item.route !== pathname) {
+            router.navigate(item.route as any);
+        }
     }
 
+    // 1) Monta o menu quando pedem para abrir.
     useEffect(() => {
         if (visible) {
             setMounted(true);
         }
+    }, [visible]);
 
-        Animated.timing(translateX, {
-            toValue: visible ? 0 : -DRAWER_WIDTH,
-            duration: 220,
-            easing: Easing.out(Easing.cubic),
-            useNativeDriver: true,
-        }).start(() => {
-            if (!visible) {
+    // 2) Anima SOMENTE depois que o menu está montado. Antes o Animated.timing
+    //    (native driver) disparava antes do Modal existir e o drawer ficava
+    //    parado fora da tela (translateX = -DRAWER_WIDTH, backdrop opaco em 0).
+    useEffect(() => {
+        if (!mounted) {
+            return;
+        }
+
+        const animation = Animated.parallel([
+            Animated.timing(translateX, {
+                toValue: visible ? 0 : -DRAWER_WIDTH,
+                duration: 220,
+                easing: Easing.out(Easing.cubic),
+                useNativeDriver: true,
+            }),
+            Animated.timing(backdropOpacity, {
+                toValue: visible ? 1 : 0,
+                duration: 220,
+                useNativeDriver: true,
+            }),
+        ]);
+
+        animation.start(({ finished }) => {
+            if (finished && !visible) {
                 setMounted(false);
             }
         });
 
-        Animated.timing(backdropOpacity, {
-            toValue: visible ? 1 : 0,
-            duration: 220,
-            useNativeDriver: true,
-        }).start();
-    }, [visible]);
+        return () => animation.stop();
+    }, [visible, mounted]);
 
     if (!mounted) {
         return null;
     }
 
     return (
-        <View style={styles.overlay} pointerEvents="box-none">
+        <View style={styles.overlay}>
             <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
                 <Pressable style={styles.backdropPressable} onPress={onClose} />
             </Animated.View>
@@ -113,8 +132,8 @@ const SideMenuWeb: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAUL
                         <MenuRow
                             key={item.key}
                             item={item}
-                            active={item.key === activeKey}
-                            onPress={() => handleSelect(item.key)}
+                            active={!!item.route && item.route === pathname}
+                            onPress={() => handleSelect(item)}
                         />
                     ))}
                 </ScrollView>

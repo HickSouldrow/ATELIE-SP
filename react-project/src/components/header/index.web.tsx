@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { usePathname, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
@@ -10,10 +11,18 @@ import { styles } from './styles.web';
 import { HeaderProps } from './types';
 
 const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...rest }) => {
+    const router = useRouter();
+    const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
 
     const initial = username?.trim()?.charAt(0)?.toUpperCase();
+
+    function handleGoHome() {
+        if (pathname !== '/dashboard') {
+            router.navigate('/dashboard' as any);
+        }
+    }
 
     function handleEditProfile() {
         setProfileOpen(false);
@@ -30,7 +39,13 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
                     <Ionicons name="menu" size={22} color={Colors.white} />
                 </Pressable>
 
-                <Text style={styles.wordmark}>AteliêSP</Text>
+                <Pressable
+                    onPress={handleGoHome}
+                    accessibilityRole="link"
+                    accessibilityLabel="Ir para o início"
+                    style={styles.wordmarkButton}>
+                    <Text style={styles.wordmark}>AteliêSP</Text>
+                </Pressable>
 
                 <View style={styles.spacer} />
 

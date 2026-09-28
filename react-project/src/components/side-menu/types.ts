@@ -4,6 +4,7 @@ export type SideMenuItem = {
     key: string;
     label: string;
     icon: keyof typeof Ionicons.glyphMap;
+    route?: string;
 };
 
 export type SideMenuProps = {
