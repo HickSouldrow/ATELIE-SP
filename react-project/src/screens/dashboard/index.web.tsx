@@ -49,7 +49,7 @@ const DashboardWeb: React.FC = () => {
                             resizeMode="cover"
                         />
                         <LinearGradient
-                            colors={['transparent', 'rgba(20,6,7,0.55)', Colors.background]}
+                            colors={['transparent', Colors.overlay['55'], Colors.background]}
                             locations={[0, 0.55, 1]}
                             style={styles.heroScrim}
                         />

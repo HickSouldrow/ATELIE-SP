@@ -6,7 +6,6 @@ import { Fonts } from '@/constants/typography';
 export const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        zIndex: 100,
     },
     backdrop: {
         ...StyleSheet.absoluteFillObject,
@@ -14,19 +13,22 @@ export const styles = StyleSheet.create({
     },
     backdropPressable: {
         flex: 1,
-        cursor: 'default',
     },
     drawer: {
         position: 'absolute',
         left: 0,
         top: 0,
         bottom: 0,
-        width: 268,
+        width: 272,
         backgroundColor: Colors.surface,
         borderRightWidth: 1,
         borderRightColor: Colors.whiteAlpha['10'],
-        paddingTop: 20,
-        paddingBottom: 18,
+        elevation: 16,
+    },
+    safeArea: {
+        flex: 1,
+        paddingTop: 16,
+        paddingBottom: 16,
         paddingHorizontal: 18,
     },
     edgeGlow: {
@@ -49,12 +51,11 @@ export const styles = StyleSheet.create({
         color: Colors.white,
     },
     closeButton: {
-        width: 30,
-        height: 30,
-        borderRadius: 6,
+        width: 34,
+        height: 34,
+        borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        cursor: 'pointer',
     },
     list: {
         gap: 4,
@@ -64,25 +65,16 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
-        paddingVertical: 11,
+        paddingVertical: 13,
         paddingHorizontal: 10,
-        borderRadius: 6,
-        cursor: 'pointer',
-    },
-    itemHovered: {
-        backgroundColor: Colors.brandAlpha["18"],
+        borderRadius: 8,
     },
     itemActive: {
         backgroundColor: Colors.brandAlpha["18"],
-        borderLeftWidth: 2,
-        borderLeftColor: Colors.brandLight,
     },
     itemLabel: {
-        fontSize: 14,
+        fontSize: 15,
         color: Colors.whiteAlpha['65'],
-    },
-    itemLabelHovered: {
-        color: Colors.white,
     },
     itemLabelActive: {
         color: Colors.white,

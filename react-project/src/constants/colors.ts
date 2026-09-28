@@ -2,31 +2,38 @@ export const Colors = {
   white: '#FFFFFF',
   black: '#000000',
 
-  background: '#140607',
-  surface: '#1F0B0D',
-  surfaceAlt: '#2A1013',
+  background: '#100B1A',
+  surface: '#1E1730',
+  surfaceAlt: '#2A2040',
 
-  brand: '#9E1130',
-  brandDark: '#6B0B21',
-  brandDeep: '#3A0812',
-  brandLight: '#D6455F',
+  brand: '#7C3AED',
+  brandDark: '#5B21B6',
+  brandDeep: '#3B0764',
+  brandLight: '#A78BFA',
 
-  btnPrimary: '#9E1130',
-  btnPrimaryPressed: '#7A0D25',
+  btnPrimary: '#7C3AED',
+  btnPrimaryPressed: '#6425D0',
 
   labelPrimary: '#FFFFFF',
-  txtPrimary: '#FFFFFF',
+  txtPrimary: '#F5F0FF',
 
-  cream: '#EEE0DA',
+  cream: '#EDE6F5',
 
-  overlayDark: 'rgba(20,6,7,0.55)',
-  overlayBrand: 'rgba(58,8,18,0.62)',
+  overlayDark: 'rgba(16,11,26,0.55)',
+  overlayBrand: 'rgba(59,7,100,0.62)',
+
+  overlay: {
+    '55': 'rgba(16,11,26,0.55)',
+    '60': 'rgba(16,11,26,0.60)',
+    '78': 'rgba(16,11,26,0.78)',
+    '88': 'rgba(16,11,26,0.88)',
+  },
 
   semantic: {
-    error: { bg: '#2A0810', border: '#D6455F', text: '#EB8DA0' },
-    success: { bg: '#08251A', border: '#5FD69B', text: '#8CE6BB' },
-    warning: { bg: '#241A08', border: '#E8B65D', text: '#F2CE8F' },
-    info: { bg: '#0A1C24', border: '#5DB8E8', text: '#8FD3F2' },
+    error: { bg: '#2A0F1A', border: '#F04438', text: '#FCA5A5' },
+    success: { bg: '#0F2419', border: '#22C55E', text: '#86EFAC' },
+    warning: { bg: '#241C08', border: '#E8B65D', text: '#F2CE8F' },
+    info: { bg: '#0D1424', border: '#5DB8E8', text: '#8FD3F2' },
   },
 
   gray: {
@@ -52,27 +59,28 @@ export const Colors = {
   },
 
   brandAlpha: {
-    '10': 'rgba(158,17,48,0.10)',
-    '18': 'rgba(158,17,48,0.18)',
-    '25': 'rgba(158,17,48,0.25)',
-    '40': 'rgba(158,17,48,0.40)',
-    '60': 'rgba(158,17,48,0.60)',
+    '10': 'rgba(124,58,237,0.10)',
+    '18': 'rgba(124,58,237,0.18)',
+    '25': 'rgba(124,58,237,0.25)',
+    '40': 'rgba(124,58,237,0.40)',
+    '60': 'rgba(124,58,237,0.60)',
   },
 
   // Paleta neon usada em elementos de destaque (header, menu, carrossel),
   // inspirada nos murais/grafites de referência do projeto.
+  // "Grafite Elétrico": roxo como cor primária, magenta como destaque.
   neon: {
-    pink: '#FF2E7A',
-    cyan: '#20E6C8',
+    pink: '#FF4FA3',
+    cyan: '#22D3EE',
     yellow: '#FFD23D',
-    purple: '#B24BFF',
+    purple: '#7C3AED',
   },
 
   neonAlpha: {
-    pink15: 'rgba(255,46,122,0.15)',
-    pink30: 'rgba(255,46,122,0.30)',
-    cyan15: 'rgba(32,230,200,0.15)',
-    cyan30: 'rgba(32,230,200,0.30)',
+    pink15: 'rgba(255,79,163,0.15)',
+    pink30: 'rgba(255,79,163,0.30)',
+    cyan15: 'rgba(34,211,238,0.15)',
+    cyan30: 'rgba(34,211,238,0.30)',
     yellow15: 'rgba(255,210,61,0.15)',
     yellow30: 'rgba(255,210,61,0.30)',
   },

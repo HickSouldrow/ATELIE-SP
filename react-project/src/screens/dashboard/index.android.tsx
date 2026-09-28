@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
 import { MuralCarousel } from '@/components/mural-carousel';
+import { SideMenu } from '@/components/side-menu';
 import { Colors } from '@/constants/colors';
 
 import { styles } from './styles.android';
@@ -31,6 +32,7 @@ const MISSION_ITEMS = [
 
 const DashboardAndroid: React.FC = () => {
     const { auth, handleLogout, handleEditProfile } = useDashboard();
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const initial = auth?.username?.trim()?.charAt(0)?.toUpperCase();
 
@@ -41,7 +43,16 @@ const DashboardAndroid: React.FC = () => {
             <View style={styles.screen}>
                 <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
                     <View style={styles.topBar}>
-                        <View>
+                        <Pressable
+                            onPress={() => setMenuOpen(true)}
+                            hitSlop={8}
+                            accessibilityRole="button"
+                            accessibilityLabel="Abrir menu"
+                            style={styles.menuButton}>
+                            <Ionicons name="menu" size={22} color={Colors.white} />
+                        </Pressable>
+
+                        <View style={styles.titleGroup}>
                             <Text style={styles.wordmark}>AteliêSP</Text>
                             <Text style={styles.greeting}>Olá, {auth?.username ?? 'visitante'} 👋</Text>
                         </View>
@@ -63,7 +74,7 @@ const DashboardAndroid: React.FC = () => {
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
                         <View style={styles.gpsCard}>
                             <View style={styles.gpsIconWrap}>
-                                <Ionicons name="location-outline" size={26} color={Colors.neon.cyan} />
+                                <Ionicons name="location-outline" size={26} color={Colors.brandLight} />
                             </View>
                             <Text style={styles.gpsTitle}>Mapa de grafites perto de você</Text>
                             <Text style={styles.gpsText}>
@@ -83,7 +94,7 @@ const DashboardAndroid: React.FC = () => {
                             {MISSION_ITEMS.map((item) => (
                                 <View key={item.title} style={styles.missionCard}>
                                     <View style={styles.missionIconWrap}>
-                                        <Ionicons name={item.icon} size={18} color={Colors.neon.cyan} />
+                                        <Ionicons name={item.icon} size={18} color={Colors.brandLight} />
                                     </View>
                                     <View style={styles.missionCardBody}>
                                         <Text style={styles.missionCardTitle}>{item.title}</Text>
@@ -99,6 +110,8 @@ const DashboardAndroid: React.FC = () => {
                     </ScrollView>
                 </SafeAreaView>
             </View>
+
+            <SideMenu visible={menuOpen} onClose={() => setMenuOpen(false)} />
         </>
     );
 };

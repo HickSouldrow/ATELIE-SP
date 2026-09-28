@@ -19,7 +19,11 @@ const DEFAULT_ITEMS: SideMenuItem[] = [
 
 const DRAWER_WIDTH = 268;
 
-const MenuRow: React.FC<{ item: SideMenuItem; onPress: () => void }> = ({ item, onPress }) => {
+const MenuRow: React.FC<{ item: SideMenuItem; active: boolean; onPress: () => void }> = ({
+    item,
+    active,
+    onPress,
+}) => {
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -27,21 +31,34 @@ const MenuRow: React.FC<{ item: SideMenuItem; onPress: () => void }> = ({ item, 
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
-            style={[styles.item, hovered && styles.itemHovered]}>
+            style={[styles.item, (hovered || active) && styles.itemHovered, active && styles.itemActive]}>
             <Ionicons
                 name={item.icon}
                 size={18}
-                color={hovered ? Colors.neon.cyan : Colors.whiteAlpha['65']}
+                color={hovered || active ? Colors.brandLight : Colors.whiteAlpha['65']}
             />
-            <Text style={[styles.itemLabel, hovered && styles.itemLabelHovered]}>{item.label}</Text>
+            <Text
+                style={[
+                    styles.itemLabel,
+                    hovered && styles.itemLabelHovered,
+                    active && styles.itemLabelActive,
+                ]}>
+                {item.label}
+            </Text>
         </Pressable>
     );
 };
 
 const SideMenuWeb: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAULT_ITEMS }) => {
     const [mounted, setMounted] = useState(visible);
+    const [activeKey, setActiveKey] = useState(items[0]?.key);
     const translateX = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
     const backdropOpacity = useRef(new Animated.Value(0)).current;
+
+    function handleSelect(key: string) {
+        setActiveKey(key);
+        onClose();
+    }
 
     useEffect(() => {
         if (visible) {
@@ -78,7 +95,7 @@ const SideMenuWeb: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAUL
 
             <Animated.View style={[styles.drawer, { transform: [{ translateX }] }]}>
                 <LinearGradient
-                    colors={[Colors.neon.pink, Colors.neon.cyan, Colors.neon.yellow]}
+                    colors={[Colors.neon.pink, Colors.neon.purple, Colors.brandLight]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.edgeGlow}
@@ -93,7 +110,12 @@ const SideMenuWeb: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAUL
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.list}>
                     {items.map((item) => (
-                        <MenuRow key={item.key} item={item} onPress={onClose} />
+                        <MenuRow
+                            key={item.key}
+                            item={item}
+                            active={item.key === activeKey}
+                            onPress={() => handleSelect(item.key)}
+                        />
                     ))}
                 </ScrollView>
 

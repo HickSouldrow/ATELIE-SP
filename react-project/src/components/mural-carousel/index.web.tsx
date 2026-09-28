@@ -7,7 +7,7 @@ import { Colors } from '@/constants/colors';
 import { styles } from './styles.web';
 import { MuralCarouselProps } from './types';
 
-const NEON_BORDERS = [Colors.neon.pink, Colors.neon.cyan, Colors.neon.yellow];
+const NEON_BORDERS = [Colors.neon.pink, Colors.neon.purple, Colors.brandLight];
 
 const MURALS = [
     { source: require('../../../assets/murais/mural-01.png'), caption: 'Fachada no centro' },
@@ -39,7 +39,7 @@ const MuralCarouselWeb: React.FC<MuralCarouselProps> = ({ title = 'Do asfalto pr
                         <View key={mural.caption} style={[styles.card, { borderColor }]}>
                             <Image source={mural.source} style={styles.image} resizeMode="cover" />
                             <LinearGradient
-                                colors={['transparent', 'rgba(8,3,4,0.88)']}
+                                colors={['transparent', Colors.overlay['88']]}
                                 style={styles.captionScrim}>
                                 <Text style={styles.caption}>{mural.caption}</Text>
                             </LinearGradient>

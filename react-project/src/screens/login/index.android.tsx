@@ -46,7 +46,7 @@ const LoginAndroid: React.FC = () => {
         style={styles.screen}
         resizeMode="cover"
       >
-        <View style={{ flex: 1, backgroundColor: "rgba(20,6,7,0.78)" }}>
+        <View style={{ flex: 1, backgroundColor: Colors.overlay['78'] }}>
           <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
             {/* No Android com edge-to-edge (SDK 57) o "padding" é o que funciona */}
             <KeyboardAvoidingView style={styles.container} behavior="padding">

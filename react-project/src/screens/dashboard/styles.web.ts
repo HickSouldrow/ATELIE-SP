@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     eyebrow: {
         fontSize: 13,
-        color: Colors.neon.cyan,
+        color: Colors.brandLight,
         fontWeight: '600',
         marginBottom: 8,
     },
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.whiteAlpha['10'],
         borderTopWidth: 2,
-        borderTopColor: Colors.neon.cyan,
+        borderTopColor: Colors.brandLight,
         padding: 18,
         gap: 6,
     },

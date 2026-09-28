@@ -15,6 +15,7 @@ import { BoxLogin } from "@/components/box-login";
 import { Button } from "@/components/button";
 import { FeedbackAlert } from "@/components/feedback-alert";
 import { Input } from "@/components/input";
+import { Colors } from "@/constants/colors";
 
 import { styles } from "./styles.android";
 import { useRegister } from "./useRegister";
@@ -48,7 +49,7 @@ const RegisterAndroid: React.FC = () => {
         style={styles.screen}
         resizeMode="cover"
       >
-        <View style={{ flex: 1, backgroundColor: "rgba(20,6,7,0.78)" }}>
+        <View style={{ flex: 1, backgroundColor: Colors.overlay['78'] }}>
           <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
               <ScrollView

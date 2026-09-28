@@ -3,12 +3,10 @@
 ## Rodando o projeto
 
 ```bash
-cd mobile
+cd react-project
 npm install
+npm expo install --fix #pra rodar no expo, precisa estar com as versões em ordem
 npm run start     # abre o Metro / Expo Dev Tools
-npm run web        # roda no navegador (bom pra ver o layout lado a lado)
-npm run android
-npm run ios
 ```
 
 ## O que já está pronto
@@ -24,12 +22,11 @@ npm run ios
   leva pro cadastro, "Já tenho conta" (no cadastro) leva de volta pro login.
 - Componentes reutilizáveis: `Button`, `Input`, `AuthImagePanel`, `BoxLogin`.
   Botões e campos com cantos quase retos (`borderRadius: 6`), não pill.
-- Paleta de cores em `src/constants/colors.ts` — vermelho carmim (`#9E1130`)
+- Paleta de cores em `src/constants/colors.ts` — Alterada para um tom mais roxo.
   como cor base da marca, fundo quase preto de base quente.
 - Fundo ilustrado (`assets/login-background.png`): papel de molde de ateliê
   de costura (grade + contorno de peças + piques + fio de trama), no lugar de
-  um gradiente genérico — dá pra trocar por uma foto/arte real do AteliêSP
-  depois.
+  um gradiente genérico.
 - Tipografia: **Fraunces** (serifada) carregada via `@expo-google-fonts/fraunces`
   e usada só no wordmark "AteliêSP" (ver `src/constants/typography.ts`); o
   resto da interface fica na fonte de sistema.

@@ -1,7 +1,17 @@
-// TODO: criar index.android.tsx com a versão mobile (provavelmente um Modal
-// nativo) quando formos cuidar do app fora do web. Por enquanto, todas as
-// plataformas usam a implementação web.
-import SideMenuWeb from './index.web';
+import React from 'react';
+import { Platform } from 'react-native';
 
-export { SideMenuWeb as SideMenu };
+import SideMenuAndroid from './index.android';
+import SideMenuWeb from './index.web';
+import { SideMenuProps } from './types';
+
+const SideMenuImplementation = Platform.select({
+    android: SideMenuAndroid,
+    ios: SideMenuAndroid,
+    web: SideMenuWeb,
+    default: SideMenuWeb,
+}) as React.FC<SideMenuProps>;
+
+export { SideMenuImplementation as SideMenu };
+export default SideMenuImplementation;
 export * from './types';

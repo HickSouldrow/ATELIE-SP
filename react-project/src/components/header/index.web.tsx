@@ -57,7 +57,7 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
                                         styles.dropdownItem,
                                         hovered && styles.dropdownItemHovered,
                                     ]}>
-                                    <Ionicons name="create-outline" size={16} color={Colors.neon.cyan} />
+                                    <Ionicons name="create-outline" size={16} color={Colors.brandLight} />
                                     <Text style={styles.dropdownItemLabel}>Editar perfil</Text>
                                 </Pressable>
                             </View>
@@ -67,7 +67,7 @@ const HeaderWeb: React.FC<HeaderProps> = ({ username, onEditProfile, style, ...r
             </View>
 
             <LinearGradient
-                colors={[Colors.neon.pink, Colors.neon.cyan, Colors.neon.yellow]}
+                colors={[Colors.neon.pink, Colors.neon.purple, Colors.brandLight]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.glowLine}

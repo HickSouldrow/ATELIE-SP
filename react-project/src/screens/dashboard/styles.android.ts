@@ -15,15 +15,26 @@ export const styles = StyleSheet.create({
     topBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingTop: 12,
         paddingBottom: 16,
+        gap: 12,
+    },
+    menuButton: {
+        width: 38,
+        height: 38,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.whiteAlpha['08'],
+    },
+    titleGroup: {
+        flex: 1,
     },
     wordmark: {
         fontFamily: Fonts.displayItalic,
         fontSize: 16,
-        color: Colors.neon.cyan,
+        color: Colors.brandLight,
     },
     greeting: {
         fontSize: 18,
@@ -39,7 +50,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Colors.surfaceAlt,
         borderWidth: 1.5,
-        borderColor: Colors.neon.cyan,
+        borderColor: Colors.brandLight,
     },
     avatarInitial: {
         fontSize: 15,
@@ -58,7 +69,7 @@ export const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: Colors.surface,
         borderWidth: 1.5,
-        borderColor: Colors.neonAlpha.cyan30,
+        borderColor: Colors.brandAlpha["40"],
         borderStyle: 'dashed',
         alignItems: 'center',
     },
@@ -68,7 +79,7 @@ export const styles = StyleSheet.create({
         borderRadius: 24,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.neonAlpha.cyan15,
+        backgroundColor: Colors.brandAlpha["18"],
         marginBottom: 12,
     },
     gpsTitle: {
@@ -89,12 +100,12 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 999,
-        backgroundColor: Colors.neonAlpha.yellow15,
+        backgroundColor: Colors.neonAlpha.pink15,
     },
     gpsBadgeText: {
         fontSize: 11,
         fontWeight: '700',
-        color: Colors.neon.yellow,
+        color: Colors.neon.pink,
     },
 
     mission: {
@@ -124,7 +135,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.neonAlpha.cyan15,
+        backgroundColor: Colors.brandAlpha["18"],
     },
     missionCardBody: {
         flex: 1,

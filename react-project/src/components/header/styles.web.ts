@@ -45,11 +45,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Colors.surfaceAlt,
         borderWidth: 1.5,
-        borderColor: Colors.neon.cyan,
+        borderColor: Colors.brandLight,
         cursor: 'pointer',
     },
     avatarHovered: {
-        shadowColor: Colors.neon.cyan,
+        shadowColor: Colors.brandLight,
         shadowOpacity: 0.7,
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 0 },
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
         cursor: 'pointer',
     },
     dropdownItemHovered: {
-        backgroundColor: Colors.neonAlpha.cyan15,
+        backgroundColor: Colors.brandAlpha["18"],
     },
     dropdownItemLabel: {
         fontSize: 13,
