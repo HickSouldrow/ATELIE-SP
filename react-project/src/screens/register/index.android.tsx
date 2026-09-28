@@ -1,12 +1,13 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useRef } from "react";
 import {
   ImageBackground,
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +16,6 @@ import { BoxLogin } from "@/components/box-login";
 import { Button } from "@/components/button";
 import { FeedbackAlert } from "@/components/feedback-alert";
 import { Input } from "@/components/input";
-import { Colors } from "@/constants/colors";
 
 import { styles } from "./styles.android";
 import { useRegister } from "./useRegister";
@@ -39,6 +39,10 @@ const RegisterAndroid: React.FC = () => {
     goToLogin,
   } = useRegister();
 
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const confirmRef = useRef<TextInput>(null);
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
@@ -49,7 +53,7 @@ const RegisterAndroid: React.FC = () => {
         style={styles.screen}
         resizeMode="cover"
       >
-        <View style={{ flex: 1, backgroundColor: Colors.overlay['78'] }}>
+        <View style={styles.overlay}>
           <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
               <ScrollView
@@ -69,7 +73,10 @@ const RegisterAndroid: React.FC = () => {
                         value={username}
                         autoCapitalize="none"
                         autoCorrect={false}
+                        autoComplete="username-new"
                         returnKeyType="next"
+                        submitBehavior="submit"
+                        onSubmitEditing={() => emailRef.current?.focus()}
                         hasError={!!fieldErrors.username}
                       />
                       {!!fieldErrors.username && (
@@ -79,6 +86,7 @@ const RegisterAndroid: React.FC = () => {
 
                     <View style={styles.field}>
                       <Input
+                        ref={emailRef}
                         placeholder="E-mail"
                         icon="mail-outline"
                         onChangeText={setEmail}
@@ -86,7 +94,10 @@ const RegisterAndroid: React.FC = () => {
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
+                        autoComplete="email"
                         returnKeyType="next"
+                        submitBehavior="submit"
+                        onSubmitEditing={() => passwordRef.current?.focus()}
                         hasError={!!fieldErrors.email}
                       />
                       {!!fieldErrors.email && (
@@ -96,28 +107,38 @@ const RegisterAndroid: React.FC = () => {
 
                     <View style={styles.field}>
                       <Input
+                        ref={passwordRef}
                         placeholder="Senha"
                         icon="lock-closed-outline"
                         isPassword
                         onChangeText={setPassword}
                         value={password}
+                        autoCapitalize="none"
                         autoCorrect={false}
+                        autoComplete="new-password"
                         returnKeyType="next"
+                        submitBehavior="submit"
+                        onSubmitEditing={() => confirmRef.current?.focus()}
                         hasError={!!fieldErrors.password}
                       />
-                      {!!fieldErrors.password && (
+                      {fieldErrors.password ? (
                         <Text style={styles.fieldError}>{fieldErrors.password}</Text>
+                      ) : (
+                        <Text style={styles.fieldHint}>Mínimo de 6 caracteres.</Text>
                       )}
                     </View>
 
                     <View style={styles.field}>
                       <Input
+                        ref={confirmRef}
                         placeholder="Confirmar senha"
                         icon="lock-closed-outline"
                         isPassword
                         onChangeText={setConfirmPassword}
                         value={confirmPassword}
+                        autoCapitalize="none"
                         autoCorrect={false}
+                        autoComplete="new-password"
                         returnKeyType="go"
                         onSubmitEditing={handleCreateAccount}
                         hasError={!!fieldErrors.confirmPassword}
@@ -128,7 +149,11 @@ const RegisterAndroid: React.FC = () => {
                     </View>
                   </View>
 
-                  {!!error && <Text style={styles.error}>{error}</Text>}
+                  {!!error && (
+                    <Text style={styles.error} aria-live="polite">
+                      {error}
+                    </Text>
+                  )}
 
                   <Button
                     title="Criar conta"
@@ -140,6 +165,7 @@ const RegisterAndroid: React.FC = () => {
                     hitSlop={8}
                     onPress={goToLogin}
                     style={styles.linkRow}
+                    accessibilityRole="link"
                   >
                     <Text style={styles.link}>Já tenho conta</Text>
                   </Pressable>

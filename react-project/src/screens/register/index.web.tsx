@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { AuthBackground } from '@/components/auth-background';
 import { BoxLogin } from '@/components/box-login';
@@ -31,6 +31,10 @@ const RegisterWeb: React.FC = () => {
         goToLogin,
     } = useRegister();
 
+    const emailRef = useRef<TextInput>(null);
+    const passwordRef = useRef<TextInput>(null);
+    const confirmRef = useRef<TextInput>(null);
+
     return (
         <>
             <Stack.Screen options={{ headerShown: false }} />
@@ -57,6 +61,8 @@ const RegisterWeb: React.FC = () => {
                                         value={username}
                                         autoCapitalize="none"
                                         autoCorrect={false}
+                                        autoComplete="username-new"
+                                        onSubmitEditing={() => emailRef.current?.focus()}
                                         hasError={!!fieldErrors.username}
                                     />
                                     {!!fieldErrors.username && (
@@ -66,6 +72,7 @@ const RegisterWeb: React.FC = () => {
 
                                 <View style={styles.field}>
                                     <Input
+                                        ref={emailRef}
                                         placeholder="E-mail"
                                         icon="mail-outline"
                                         onChangeText={setEmail}
@@ -73,6 +80,8 @@ const RegisterWeb: React.FC = () => {
                                         keyboardType="email-address"
                                         autoCapitalize="none"
                                         autoCorrect={false}
+                                        autoComplete="email"
+                                        onSubmitEditing={() => passwordRef.current?.focus()}
                                         hasError={!!fieldErrors.email}
                                     />
                                     {!!fieldErrors.email && (
@@ -82,27 +91,37 @@ const RegisterWeb: React.FC = () => {
 
                                 <View style={styles.field}>
                                     <Input
+                                        ref={passwordRef}
                                         placeholder="Senha"
                                         icon="lock-closed-outline"
                                         isPassword
                                         onChangeText={setPassword}
                                         value={password}
+                                        autoCapitalize="none"
                                         autoCorrect={false}
+                                        autoComplete="new-password"
+                                        onSubmitEditing={() => confirmRef.current?.focus()}
                                         hasError={!!fieldErrors.password}
                                     />
-                                    {!!fieldErrors.password && (
+                                    {fieldErrors.password ? (
                                         <Text style={styles.fieldError}>{fieldErrors.password}</Text>
+                                    ) : (
+                                        <Text style={styles.fieldHint}>Mínimo de 6 caracteres.</Text>
                                     )}
                                 </View>
 
                                 <View style={styles.field}>
                                     <Input
+                                        ref={confirmRef}
                                         placeholder="Confirmar senha"
                                         icon="lock-closed-outline"
                                         isPassword
                                         onChangeText={setConfirmPassword}
                                         value={confirmPassword}
+                                        autoCapitalize="none"
                                         autoCorrect={false}
+                                        autoComplete="new-password"
+                                        onSubmitEditing={handleCreateAccount}
                                         hasError={!!fieldErrors.confirmPassword}
                                     />
                                     {!!fieldErrors.confirmPassword && (
@@ -111,7 +130,11 @@ const RegisterWeb: React.FC = () => {
                                 </View>
                             </View>
 
-                            {!!error && <Text style={styles.error}>{error}</Text>}
+                            {!!error && (
+                                <Text style={styles.error} aria-live="polite">
+                                    {error}
+                                </Text>
+                            )}
 
                             <Button
                                 title="Criar conta"
@@ -119,7 +142,11 @@ const RegisterWeb: React.FC = () => {
                                 onPress={handleCreateAccount}
                             />
 
-                            <Pressable hitSlop={8} onPress={goToLogin} style={styles.linkRow}>
+                            <Pressable
+                                hitSlop={8}
+                                onPress={goToLogin}
+                                style={styles.linkRow}
+                                accessibilityRole="link">
                                 <Text style={styles.link}>Já tenho conta</Text>
                             </Pressable>
                         </BoxLogin>

@@ -7,18 +7,33 @@ import { Colors } from '@/constants/colors';
 import { styles } from './styles.android';
 import { InputProps } from './types';
 
-const InputAndroid: React.FC<InputProps> = ({ icon, isPassword, hasError, ...rest }) => {
+const InputAndroid: React.FC<InputProps> = ({ icon, isPassword, hasError, onFocus, onBlur, ...rest }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
-        <View style={[styles.wrapper, hasError && styles.wrapperError]}>
-            <Ionicons name={icon} size={20} color={Colors.whiteAlpha['65']} />
+        <View style={[styles.wrapper, isFocused && styles.wrapperFocused, hasError && styles.wrapperError]}>
+            <Ionicons
+                name={icon}
+                size={20}
+                color={hasError ? Colors.error : isFocused ? Colors.primaryLight : Colors.textMuted}
+            />
 
             <TextInput
                 style={styles.input}
-                placeholderTextColor={Colors.whiteAlpha['50']}
+                placeholderTextColor={Colors.textSubtle}
+                selectionColor={Colors.primaryLight}
+                cursorColor={Colors.primaryLight}
                 secureTextEntry={isPassword && !isVisible}
                 underlineColorAndroid="transparent"
+                onFocus={(event) => {
+                    setIsFocused(true);
+                    onFocus?.(event);
+                }}
+                onBlur={(event) => {
+                    setIsFocused(false);
+                    onBlur?.(event);
+                }}
                 {...rest}
             />
 
@@ -31,7 +46,7 @@ const InputAndroid: React.FC<InputProps> = ({ icon, isPassword, hasError, ...res
                     <Ionicons
                         name={isVisible ? 'eye-off-outline' : 'eye-outline'}
                         size={20}
-                        color={Colors.whiteAlpha['65']}
+                        color={Colors.textMuted}
                     />
                 </Pressable>
             )}

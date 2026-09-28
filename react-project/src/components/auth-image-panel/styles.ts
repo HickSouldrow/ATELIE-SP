@@ -7,12 +7,12 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.background,
     },
     image: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         width: '100%',
         height: '100%',
         opacity: 0.55,
     },
     edgeFade: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
     },
 });

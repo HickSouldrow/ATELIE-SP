@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,6 +32,7 @@ const MISSION_ITEMS = [
 
 const DashboardAndroid: React.FC = () => {
     const { auth, handleLogout, handleEditProfile } = useDashboard();
+    const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const initial = auth?.username?.trim()?.charAt(0)?.toUpperCase();
@@ -78,11 +79,21 @@ const DashboardAndroid: React.FC = () => {
                             </View>
                             <Text style={styles.gpsTitle}>Mapa de grafites perto de você</Text>
                             <Text style={styles.gpsText}>
-                                Em breve, os murais públicos mapeados vão aparecer aqui, com os locais
-                                que você já visitou.
+                                Fotografe murais pela cidade e veja cada obra marcada no lugar onde ela
+                                existe.
                             </Text>
-                            <View style={styles.gpsBadge}>
-                                <Text style={styles.gpsBadgeText}>Em construção</Text>
+                            <View style={styles.gpsActions}>
+                                <Button
+                                    title="Registrar obra"
+                                    icon="camera-outline"
+                                    onPress={() => router.push('/register-artwork')}
+                                />
+                                <Button
+                                    title="Ver mapa"
+                                    icon="map-outline"
+                                    variant="secondary"
+                                    onPress={() => router.push('/map')}
+                                />
                             </View>
                         </View>
 

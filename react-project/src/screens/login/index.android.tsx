@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useRef } from "react";
 import {
   ActivityIndicator,
   ImageBackground,
@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -30,11 +31,12 @@ const LoginAndroid: React.FC = () => {
     successMessage,
     isLoading,
     isCheckingSession,
+    canSubmit,
     handleLogin,
     goToRegister,
   } = useLogin();
 
-  const canSubmit = username.trim().length > 0 && password.length > 0;
+  const passwordRef = useRef<TextInput>(null);
 
   return (
     <>
@@ -46,7 +48,7 @@ const LoginAndroid: React.FC = () => {
         style={styles.screen}
         resizeMode="cover"
       >
-        <View style={{ flex: 1, backgroundColor: Colors.overlay['78'] }}>
+        <View style={styles.overlay}>
           <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
             {/* No Android com edge-to-edge (SDK 57) o "padding" é o que funciona */}
             <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -66,10 +68,14 @@ const LoginAndroid: React.FC = () => {
                       value={username}
                       autoCapitalize="none"
                       autoCorrect={false}
+                      autoComplete="username"
                       returnKeyType="next"
+                      submitBehavior="submit"
+                      onSubmitEditing={() => passwordRef.current?.focus()}
                     />
 
                     <Input
+                      ref={passwordRef}
                       placeholder="Senha"
                       icon="lock-closed-outline"
                       isPassword
@@ -78,14 +84,21 @@ const LoginAndroid: React.FC = () => {
                       autoCapitalize="none"
                       autoCorrect={false}
                       returnKeyType="go"
-                      onSubmitEditing={canSubmit ? handleLogin : undefined}
+                      autoComplete="current-password"
+                      onSubmitEditing={handleLogin}
                     />
                   </View>
 
                   {!error && !!successMessage && (
-                    <Text style={styles.success}>{successMessage}</Text>
+                    <Text style={styles.success} aria-live="polite">
+                      {successMessage}
+                    </Text>
                   )}
-                  {!!error && <Text style={styles.error}>{error}</Text>}
+                  {!!error && (
+                    <Text style={styles.error} aria-live="polite">
+                      {error}
+                    </Text>
+                  )}
 
                   <Button
                     title="Entrar"
@@ -98,6 +111,7 @@ const LoginAndroid: React.FC = () => {
                     hitSlop={8}
                     onPress={goToRegister}
                     style={styles.linkRow}
+                    accessibilityRole="link"
                   >
                     <Text style={styles.link}>Não possuo uma conta</Text>
                   </Pressable>
@@ -107,8 +121,8 @@ const LoginAndroid: React.FC = () => {
 
             {/* Verificação de sessão vira overlay: o formulário não é desmontado */}
             {isCheckingSession && (
-              <View style={styles.checking} pointerEvents="auto">
-                <ActivityIndicator color={Colors.white} />
+              <View style={styles.checking}>
+                <ActivityIndicator color={Colors.primaryLight} />
               </View>
             )}
           </SafeAreaView>

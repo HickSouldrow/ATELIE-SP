@@ -1,53 +1,79 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { usePathname, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, BackHandler, Easing, Pressable, ScrollView, Text, View } from 'react-native';
+import {
+    ActivityIndicator,
+    Animated,
+    BackHandler,
+    Easing,
+    Pressable,
+    ScrollView,
+    Text,
+    useWindowDimensions,
+    View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Colors } from '@/constants/colors';
 
 import { styles } from './styles.android';
 import { SideMenuItem, SideMenuProps } from './types';
+import { useSideMenu } from './useSideMenu';
 
-const DEFAULT_ITEMS: SideMenuItem[] = [
-    { key: 'inicio', label: 'Início', icon: 'home-outline', route: '/dashboard' },
-    { key: 'mapa', label: 'Mapa de murais', icon: 'map-outline' },
-    { key: 'comunidade', label: 'Comunidade', icon: 'people-outline' },
-    { key: 'favoritos', label: 'Favoritos', icon: 'heart-outline' },
-    { key: 'sobre', label: 'Sobre nós', icon: 'information-circle-outline', route: '/about' },
-    { key: 'config', label: 'Configurações', icon: 'settings-outline' },
-];
-
-const DRAWER_WIDTH = 272;
+const MAX_DRAWER_WIDTH = 296;
 
 const MenuRow: React.FC<{ item: SideMenuItem; active: boolean; onPress: () => void }> = ({
     item,
     active,
     onPress,
 }) => {
+    const iconName = active && item.activeIcon ? item.activeIcon : item.icon;
+    const iconColor = item.soon ? Colors.textDisabled : active ? Colors.accent : Colors.textMuted;
+
     return (
         <Pressable
             onPress={onPress}
-            android_ripple={{ color: Colors.brandAlpha["18"] }}
+            disabled={item.soon}
+            android_ripple={{ color: Colors.primarySoft }}
+            accessibilityRole="menuitem"
+            aria-selected={active}
+            aria-disabled={!!item.soon}
+            accessibilityLabel={item.soon ? `${item.label}, em breve` : item.label}
             style={[styles.item, active && styles.itemActive]}>
-            <Ionicons
-                name={item.icon}
-                size={19}
-                color={active ? Colors.brandLight : Colors.whiteAlpha['65']}
-            />
-            <Text style={[styles.itemLabel, active && styles.itemLabelActive]}>{item.label}</Text>
+            {active && <View style={styles.activeIndicator} />}
+            <Ionicons name={iconName} size={20} color={iconColor} />
+            <Text
+                style={[styles.itemLabel, active && styles.itemLabelActive, item.soon && styles.itemLabelSoon]}
+                numberOfLines={1}>
+                {item.label}
+            </Text>
+            {item.soon && (
+                <View style={styles.soonBadge}>
+                    <Text style={styles.soonBadgeText}>Em breve</Text>
+                </View>
+            )}
         </Pressable>
     );
 };
 
-const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, items = DEFAULT_ITEMS }) => {
+const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, sections }) => {
     const [mounted, setMounted] = useState(visible);
-    const router = useRouter();
-    const pathname = usePathname();
     const insets = useSafeAreaInsets();
-    const translateX = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
+    const { width: screenWidth } = useWindowDimensions();
+    const drawerWidth = Math.min(MAX_DRAWER_WIDTH, Math.round(screenWidth * 0.84));
+    const translateX = useRef(new Animated.Value(-drawerWidth)).current;
     const backdropOpacity = useRef(new Animated.Value(0)).current;
+
+    const {
+        username,
+        sections: visibleSections,
+        isActive,
+        handleSelect,
+        handleLogout,
+        isLoggingOut,
+    } = useSideMenu(onClose, sections);
+
+    const initial = username?.trim()?.charAt(0)?.toUpperCase();
 
     // 1) Monta o menu quando pedem para abrir.
     useEffect(() => {
@@ -66,7 +92,7 @@ const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, items = DE
 
         const animation = Animated.parallel([
             Animated.timing(translateX, {
-                toValue: visible ? 0 : -DRAWER_WIDTH,
+                toValue: visible ? 0 : -drawerWidth,
                 duration: 220,
                 easing: Easing.out(Easing.cubic),
                 useNativeDriver: false,
@@ -99,13 +125,6 @@ const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, items = DE
         return () => sub.remove();
     }, [visible, onClose]);
 
-    function handleSelect(item: SideMenuItem) {
-        onClose();
-        if (item.route && item.route !== pathname) {
-            router.navigate(item.route as any);
-        }
-    }
-
     if (!mounted) {
         return null;
     }
@@ -113,18 +132,24 @@ const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, items = DE
     return (
         <View style={styles.overlay}>
             <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
-                <Pressable style={styles.backdropPressable} onPress={onClose} />
+                <Pressable
+                    style={styles.backdropPressable}
+                    onPress={onClose}
+                    accessibilityLabel="Fechar menu"
+                />
             </Animated.View>
 
-            <Animated.View style={[styles.drawer, { transform: [{ translateX }] }]}>
+            <Animated.View
+                style={[styles.drawer, { width: drawerWidth, transform: [{ translateX }] }]}
+                accessibilityViewIsModal>
                 <LinearGradient
-                    colors={[Colors.neon.pink, Colors.neon.purple, Colors.brandLight]}
+                    colors={[Colors.accent, Colors.primary, Colors.primaryLight]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.edgeGlow}
                 />
 
-                <View style={[styles.safeArea, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 16 }]}>
+                <View style={[styles.safeArea, { paddingTop: insets.top + 14, paddingBottom: insets.bottom + 12 }]}>
                     <View style={styles.header}>
                         <Text style={styles.wordmark}>AteliêSP</Text>
                         <Pressable
@@ -132,23 +157,62 @@ const SideMenuAndroid: React.FC<SideMenuProps> = ({ visible, onClose, items = DE
                             hitSlop={8}
                             accessibilityRole="button"
                             accessibilityLabel="Fechar menu"
+                            android_ripple={{ color: Colors.whiteAlpha['12'], borderless: true }}
                             style={styles.closeButton}>
-                            <Ionicons name="close" size={20} color={Colors.whiteAlpha['65']} />
+                            <Ionicons name="close" size={22} color={Colors.textMuted} />
                         </Pressable>
                     </View>
 
+                    <View style={styles.userCard}>
+                        <View style={styles.userAvatar}>
+                            {initial ? (
+                                <Text style={styles.userInitial}>{initial}</Text>
+                            ) : (
+                                <Ionicons name="person" size={18} color={Colors.text} />
+                            )}
+                        </View>
+                        <View style={styles.userInfo}>
+                            <Text style={styles.userName} numberOfLines={1}>
+                                {username ?? 'Visitante'}
+                            </Text>
+                            <Text style={styles.userCaption}>Conta AteliêSP</Text>
+                        </View>
+                    </View>
+
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.list}>
-                        {items.map((item) => (
-                            <MenuRow
-                                key={item.key}
-                                item={item}
-                                active={!!item.route && item.route === pathname}
-                                onPress={() => handleSelect(item)}
-                            />
+                        {visibleSections.map((section) => (
+                            <View key={section.key} style={styles.section}>
+                                <Text style={styles.sectionTitle} accessibilityRole="header">
+                                    {section.title}
+                                </Text>
+                                {section.items.map((item) => (
+                                    <MenuRow
+                                        key={item.key}
+                                        item={item}
+                                        active={isActive(item)}
+                                        onPress={() => handleSelect(item)}
+                                    />
+                                ))}
+                            </View>
                         ))}
                     </ScrollView>
 
-                    <Text style={styles.footerNote}>Mais páginas em breve</Text>
+                    <View style={styles.footer}>
+                        <Pressable
+                            onPress={handleLogout}
+                            disabled={isLoggingOut}
+                            android_ripple={{ color: Colors.errorPressed }}
+                            accessibilityRole="button"
+                            accessibilityLabel="Sair da conta"
+                            style={styles.item}>
+                            {isLoggingOut ? (
+                                <ActivityIndicator size="small" color={Colors.error} />
+                            ) : (
+                                <Ionicons name="log-out-outline" size={20} color={Colors.error} />
+                            )}
+                            <Text style={[styles.itemLabel, styles.logoutLabel]}>Sair</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </Animated.View>
         </View>

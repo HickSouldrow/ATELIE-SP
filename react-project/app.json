@@ -33,7 +33,21 @@
           "backgroundColor": "#100B1A"
         }
       ],
-      "expo-status-bar"
+      "expo-status-bar",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "O AteliêSP usa a câmera para você fotografar as obras que registrar.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O AteliêSP usa sua localização para marcar no mapa onde cada obra foi registrada."
+        }
+      ]
     ]
   }
 }

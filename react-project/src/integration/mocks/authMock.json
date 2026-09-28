@@ -11,10 +11,12 @@
     }
   ],
   "errors": {
-    "userExists": "Esse usuário já existe.",
+    "userExists": "Esse usuário já existe. Escolha outro nome.",
+    "emailExists": "Esse e-mail já está em uso.",
     "invalidCredentials": "Usuário ou senha inválidos.",
     "sessionExpired": "Sua sessão expirou. Faça login novamente.",
-    "adminOnly": "Apenas administradores podem acessar isso."
+    "adminOnly": "Apenas administradores podem acessar isso.",
+    "storage": "Não foi possível salvar a conta neste aparelho. Tente novamente."
   },
   "messages": {
     "user": "Bem-vindo(a) ao AteliêSP!",

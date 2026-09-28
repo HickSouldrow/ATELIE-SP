@@ -15,13 +15,20 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 14,
         gap: 10,
     },
+    wrapperFocused: {
+        borderColor: Colors.primaryLight,
+    },
     input: {
         flex: 1,
         fontSize: 15,
-        color: Colors.white,
-        outlineColor: Colors.brand,
+        color: Colors.text,
+        // A borda do wrapper já indica o foco.
+        outlineStyle: 'none',
     } as any,
     wrapperError: {
-        borderColor: Colors.semantic.error.border,
+        borderColor: Colors.errorStrong,
     },
+    eyeButton: {
+        cursor: 'pointer',
+    } as any,
 });

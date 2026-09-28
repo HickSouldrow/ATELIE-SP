@@ -15,13 +15,16 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 14,
         gap: 10,
     },
+    wrapperFocused: {
+        borderColor: Colors.primaryLight,
+    },
     input: {
         flex: 1,
         fontSize: 16,
-        color: Colors.white,
+        color: Colors.text,
         paddingVertical: 0,
     },
     wrapperError: {
-        borderColor: Colors.semantic.error.border,
+        borderColor: Colors.errorStrong,
     },
 });

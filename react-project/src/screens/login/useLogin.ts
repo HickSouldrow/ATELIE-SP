@@ -2,19 +2,21 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/contexts/AuthContext';
-import { getMessage, login } from '@/integration/authIntegration';
+import { getErrorMessage, getMessage, login } from '@/integration/authIntegration';
 
 export function useLogin() {
     const router = useRouter();
     const { setAuth } = useAuth();
     const params = useLocalSearchParams<{ registered?: string }>();
 
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [username, setUsernameValue] = useState<string>('');
+    const [password, setPasswordValue] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [successMessage, setSuccessMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCheckingSession, setIsCheckingSession] = useState<boolean>(true);
+
+    const canSubmit = username.trim().length > 0 && password.length > 0 && !isLoading;
 
     useEffect(() => {
         getMessage()
@@ -28,17 +30,31 @@ export function useLogin() {
         }
     }, [params.registered]);
 
+    function setUsername(value: string) {
+        setUsernameValue(value);
+        setError('');
+    }
+
+    function setPassword(value: string) {
+        setPasswordValue(value);
+        setError('');
+    }
+
     async function handleLogin() {
+        if (!canSubmit) {
+            return;
+        }
+
         setError('');
         setSuccessMessage('');
         setIsLoading(true);
 
         try {
-            const data = await login({ username, password });
+            const data = await login({ username: username.trim(), password });
             setAuth(data);
             router.replace('/dashboard');
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Não foi possível entrar.');
+            setError(getErrorMessage(err, 'Não foi possível entrar.'));
         } finally {
             setIsLoading(false);
         }
@@ -57,6 +73,7 @@ export function useLogin() {
         successMessage,
         isLoading,
         isCheckingSession,
+        canSubmit,
         handleLogin,
         goToRegister,
     };

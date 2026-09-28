@@ -1,21 +1,107 @@
-export const Colors = {
+// Paleta "Grafite Elétrico" do AteliêSP: a noite paulistana como fundo,
+// o violeta do spray como cor primária e o magenta neon como destaque,
+// inspirados nos murais/grafites de referência do projeto.
+//
+// Use sempre os tokens semânticos (background, surface, primary, accent,
+// text*, error, success...). Os nomes antigos no fim do objeto são apelidos
+// mantidos para as telas que ainda não migraram.
+
+const palette = {
+  night: '#100B1A',
+  nightSurface: '#1E1730',
+  nightRaised: '#2A2040',
+
+  violet: '#7C3AED',
+  violetPressed: '#6425D0',
+  violetDark: '#5B21B6',
+  violetDeep: '#3B0764',
+  violetLight: '#A78BFA',
+
+  magenta: '#FF4FA3',
+  cyan: '#22D3EE',
+  yellow: '#FFD23D',
+
+  paper: '#F5F0FF',
   white: '#FFFFFF',
   black: '#000000',
+} as const;
 
-  background: '#100B1A',
-  surface: '#1E1730',
-  surfaceAlt: '#2A2040',
+export const Colors = {
+  // Fundo e superfícies
+  background: palette.night,
+  surface: palette.nightSurface,
+  surfaceRaised: palette.nightRaised,
+  border: 'rgba(255,255,255,0.10)',
+  borderStrong: 'rgba(255,255,255,0.18)',
+  scrim: 'rgba(16,11,26,0.78)',
 
-  brand: '#7C3AED',
-  brandDark: '#5B21B6',
-  brandDeep: '#3B0764',
-  brandLight: '#A78BFA',
+  // Primária: botões e ações principais
+  primary: palette.violet,
+  primaryPressed: palette.violetPressed,
+  primaryLight: palette.violetLight,
+  primarySoft: 'rgba(124,58,237,0.18)',
+  onPrimary: palette.white,
 
-  btnPrimary: '#7C3AED',
-  btnPrimaryPressed: '#6425D0',
+  // Destaque: item ativo, marcadores e detalhes neon
+  accent: palette.magenta,
+  accentSoft: 'rgba(255,79,163,0.15)',
+  highlight: palette.yellow,
+  highlightSoft: 'rgba(255,210,61,0.15)',
 
-  labelPrimary: '#FFFFFF',
-  txtPrimary: '#F5F0FF',
+  // Texto (contraste mínimo de 4.5:1 sobre background e surface)
+  text: palette.paper,
+  textMuted: 'rgba(245,240,255,0.72)',
+  textSubtle: 'rgba(245,240,255,0.56)',
+  textDisabled: 'rgba(245,240,255,0.36)',
+
+  // Estados
+  error: '#FCA5A5',
+  errorStrong: '#F04438',
+  errorSoft: '#2A0F1A',
+  errorPressed: 'rgba(240,68,56,0.22)',
+  success: '#86EFAC',
+  successStrong: '#22C55E',
+  successSoft: '#0F2419',
+
+  // Controles sobre a câmera/fotos (legíveis em qualquer imagem)
+  mediaControl: 'rgba(0,0,0,0.45)',
+  mediaBar: 'rgba(0,0,0,0.35)',
+  mediaShutterRing: 'rgba(255,255,255,0.25)',
+
+  // Tema escuro do mapa (Google Maps), no mesmo tom da paleta
+  map: {
+    land: '#1A1428',
+    poi: '#221A33',
+    park: '#1D2A26',
+    road: '#2E2442',
+    roadStroke: '#1A1428',
+    highway: '#4A3470',
+    highwayLabel: '#D6C8F5',
+    transit: '#261D38',
+    transitLabel: '#C4B5FD',
+    water: '#0B0713',
+    waterLabel: '#6B6280',
+    label: '#A9A1BD',
+    labelStroke: '#100B1A',
+    border: '#3A2F52',
+  },
+
+  // ---- Apelidos antigos (evite em código novo) ----
+  white: palette.white,
+  black: palette.black,
+
+  surfaceAlt: palette.nightRaised,
+
+  brand: palette.violet,
+  brandDark: palette.violetDark,
+  brandDeep: palette.violetDeep,
+  brandLight: palette.violetLight,
+
+  btnPrimary: palette.violet,
+  btnPrimaryPressed: palette.violetPressed,
+
+  labelPrimary: palette.white,
+  txtPrimary: palette.paper,
 
   cream: '#EDE6F5',
 
@@ -66,14 +152,11 @@ export const Colors = {
     '60': 'rgba(124,58,237,0.60)',
   },
 
-  // Paleta neon usada em elementos de destaque (header, menu, carrossel),
-  // inspirada nos murais/grafites de referência do projeto.
-  // "Grafite Elétrico": roxo como cor primária, magenta como destaque.
   neon: {
-    pink: '#FF4FA3',
-    cyan: '#22D3EE',
-    yellow: '#FFD23D',
-    purple: '#7C3AED',
+    pink: palette.magenta,
+    cyan: palette.cyan,
+    yellow: palette.yellow,
+    purple: palette.violet,
   },
 
   neonAlpha: {
